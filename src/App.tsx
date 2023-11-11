@@ -1,24 +1,30 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 
 import "./App.css";
-import ImproveType from "./ImproveType";
+// import ImproveType from "./ImproveType";
 import roundToDecimal from "./roundToDecimal";
-//Mejorarel tema de mejoras. Que suba precios y la mejora
+
 function App() {
-  const IMPROVES = {
-    AUTOCLICK: { improve: 0.1, price: 10 },
-    GRANDMA: { improve: 1, price: 15 },
-    FACTORY: { improve: 5, price: 100 },
-  };
   const [cookies, setCookies] = useState(0);
   const [improvements, setImprovements] = useState<number[]>([]);
+  const [improve_autoClick, setAutoClick] = useState({
+    improve: 0.1,
+    price: 10,
+  });
+  //TODO => Pensemos. Tengo una serie de mejoras, las tendré que manejar con el useState
+  //Hago un estado por cada mejora? O un array de mejoras
+  // const IMPROVES = {
+  //   AUTOCLICK: { ...improve_autoClick, setAutoClick },
+  //   GRANDMA: { improve: 1, price: 15 },
+  //   FACTORY: { improve: 5, price: 100 },
+  // };
   useEffect(() => {
     const intervalId = setInterval(() => {
       applyImprovements();
     }, 1000);
 
     return () => {
-      // Limpiar el intervalo al desmontar el componente
       clearInterval(intervalId);
     };
   }, [improvements]);
@@ -34,12 +40,17 @@ function App() {
     );
   };
 
-  const buyCookies = (improve: ImproveType) => {
-    if (cookies < improve.price) return;
-    const newImprov = [...improvements, improve.improve];
+  const buyCookies = () => {
+    if (cookies < improve_autoClick.price) return;
+
+    const newImprov = [...improvements, improve_autoClick.improve];
     console.log(newImprov);
     setImprovements(newImprov);
-    setCookies(cookies - improve.price);
+    setCookies(cookies - improve_autoClick.price);
+    setAutoClick({
+      improve: Number(improve_autoClick.improve + 0.1),
+      price: improve_autoClick.price + improve_autoClick.price * 0.2,
+    });
   };
 
   const handleClick = () => {
@@ -50,8 +61,11 @@ function App() {
       <h1>Cooking Clicker</h1>
       <h3> {roundToDecimal(cookies, 0)} cookies</h3>
       <p>
-        {improvements.reduce((total, increment) => total + increment, 0)}{" "}
-        cookies per second
+        {roundToDecimal(
+          improvements.reduce((total, increment) => total + increment, 0),
+          1
+        )}{" "}
+        Cookies per second
       </p>
       <article>
         <div className="card">
@@ -63,13 +77,10 @@ function App() {
 
       {cookies >= 10 && (
         <article className="article_addcookies">
-          <button
-            className="card__button"
-            onClick={() => buyCookies(IMPROVES.AUTOCLICK)}
-          >
-            Autoclick{" "}
+          <button className="card__button" onClick={() => buyCookies()}>
+            Autoclick - PRICE: {improve_autoClick.price}
           </button>
-          <button
+          {/* <button
             className="card__button"
             onClick={() => buyCookies(IMPROVES.GRANDMA)}
           >
@@ -80,7 +91,7 @@ function App() {
             onClick={() => buyCookies(IMPROVES.FACTORY)}
           >
             Factory
-          </button>
+          </button> */}
         </article>
       )}
     </>
