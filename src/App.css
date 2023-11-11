@@ -34,6 +34,24 @@
   cursor: pointer;
   transition: border-color 0.25s;
 }
+.card__image {
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+.card__image:hover {
+  transform: scale(1.1);
+}
+.card__image:active {
+  transform: scale(0.9);
+}
+
+.mini-galleta {
+  width: 30px;
+  height: 20px;
+  margin: 5px;
+  display: inline-block;
+}
+
 .article_addcookies {
   margin-top: 10px;
 }

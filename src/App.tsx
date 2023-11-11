@@ -63,13 +63,16 @@ function App() {
       </p>
       <article>
         <div className="card">
-          <button className="card__button" onClick={handleClick}>
-            COOKIE
-          </button>
+          <img
+            onClick={handleClick}
+            className="card__image"
+            src="/src/assets/images/cookie.png"
+            alt="cookie_image"
+          />
         </div>
       </article>
 
-      {cookies >= 10 && (
+      {cookies >= improve_autoClick.price && (
         <article className="article_addcookies">
           <button className="card__button" onClick={() => buyCookies()}>
             Improve {roundToDecimal(improve_autoClick.improve, 1)} Autoclick -
