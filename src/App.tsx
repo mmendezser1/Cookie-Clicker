@@ -2,23 +2,17 @@
 import { useEffect, useState } from "react";
 
 import "./App.css";
-// import ImproveType from "./ImproveType";
+
 import roundToDecimal from "./roundToDecimal";
 
 function App() {
-  const [cookies, setCookies] = useState(0);
+  const [cookies, setCookies] = useState(200);
   const [improvements, setImprovements] = useState<number[]>([]);
   const [improve_autoClick, setAutoClick] = useState({
     improve: 0.1,
     price: 10,
   });
-  //TODO => Pensemos. Tengo una serie de mejoras, las tendré que manejar con el useState
-  //Hago un estado por cada mejora? O un array de mejoras
-  // const IMPROVES = {
-  //   AUTOCLICK: { ...improve_autoClick, setAutoClick },
-  //   GRANDMA: { improve: 1, price: 15 },
-  //   FACTORY: { improve: 5, price: 100 },
-  // };
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       applyImprovements();
@@ -49,7 +43,7 @@ function App() {
     setCookies(cookies - improve_autoClick.price);
     setAutoClick({
       improve: Number(improve_autoClick.improve + 0.1),
-      price: improve_autoClick.price + improve_autoClick.price * 0.2,
+      price: improve_autoClick.price * 1.2,
     });
   };
 
@@ -78,7 +72,8 @@ function App() {
       {cookies >= 10 && (
         <article className="article_addcookies">
           <button className="card__button" onClick={() => buyCookies()}>
-            Autoclick - PRICE: {improve_autoClick.price}
+            Improve {roundToDecimal(improve_autoClick.improve, 1)} Autoclick -
+            PRICE: {roundToDecimal(improve_autoClick.price, 1)}
           </button>
           {/* <button
             className="card__button"
