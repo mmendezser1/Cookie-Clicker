@@ -4,7 +4,7 @@ import "./App.css";
 import roundToDecimal from "./roundToDecimal";
 
 function App() {
-  const [cookies, setCookies] = useState(200);
+  const [cookies, setCookies] = useState(0);
   const [improvements, setImprovements] = useState<number[]>([]);
   const [improveAutoClick, setAutoClick] = useState({
     improve: 0.1,
