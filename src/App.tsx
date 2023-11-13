@@ -1,14 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-
 import "./App.css";
-
 import roundToDecimal from "./roundToDecimal";
 
 function App() {
   const [cookies, setCookies] = useState(200);
   const [improvements, setImprovements] = useState<number[]>([]);
-  const [improve_autoClick, setAutoClick] = useState({
+  const [improveAutoClick, setAutoClick] = useState({
     improve: 0.1,
     price: 10,
   });
@@ -35,15 +33,14 @@ function App() {
   };
 
   const buyCookies = () => {
-    if (cookies < improve_autoClick.price) return;
+    if (cookies < improveAutoClick.price) return;
 
-    const newImprov = [...improvements, improve_autoClick.improve];
-    console.log(newImprov);
+    const newImprov = [...improvements, improveAutoClick.improve];
     setImprovements(newImprov);
-    setCookies(cookies - improve_autoClick.price);
+    setCookies(cookies - improveAutoClick.price);
     setAutoClick({
-      improve: Number(improve_autoClick.improve + 0.1),
-      price: improve_autoClick.price * 1.2,
+      improve: Number(improveAutoClick.improve + 0.1),
+      price: improveAutoClick.price * 1.2,
     });
   };
 
@@ -72,24 +69,20 @@ function App() {
         </div>
       </article>
 
-      {cookies >= improve_autoClick.price && (
+      {cookies >= improveAutoClick.price && (
         <article className="article_addcookies">
-          <button className="card__button" onClick={() => buyCookies()}>
-            Improve {roundToDecimal(improve_autoClick.improve, 1)} Autoclick -
-            PRICE: {roundToDecimal(improve_autoClick.price, 1)}
-          </button>
-          {/* <button
-            className="card__button"
-            onClick={() => buyCookies(IMPROVES.GRANDMA)}
-          >
-            Grandma
-          </button>
           <button
             className="card__button"
-            onClick={() => buyCookies(IMPROVES.FACTORY)}
+            onClick={() => buyCookies()}
+            title={
+              "The Cookie Counter improves " +
+              roundToDecimal(improveAutoClick.improve, 1) +
+              " cookies/second"
+            }
           >
-            Factory
-          </button> */}
+            Improve AutoClick - PRICE:{" "}
+            {roundToDecimal(improveAutoClick.price, 1)} cookies
+          </button>
         </article>
       )}
     </>
